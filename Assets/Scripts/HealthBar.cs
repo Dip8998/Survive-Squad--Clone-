@@ -5,16 +5,24 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public Slider healthbar;
-    public Camera Camera;
+    public Slider healthBar;
+    public Transform playerTransform;
+    public Vector3 offset;
+    public Camera cam;
 
+    
     public void UpdateHealthBar(float maxHealth, float currentHealth)
     {
-        healthbar.value = currentHealth / maxHealth;
+        healthBar.value = currentHealth / maxHealth;
     }
 
-    void Update()
+    void LateUpdate()
     {
-        transform.rotation = Camera.transform.rotation;
+        if (playerTransform != null)
+        {
+            transform.rotation = cam.transform.rotation;
+            transform.position = playerTransform.position + offset;
+            transform.rotation = Quaternion.identity;  
+        }
     }
 }

@@ -5,10 +5,18 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    private Animator animator;
+
+    void Start()
+    {
+        // Get the Animator component attached to the player
+        animator = GetComponent<Animator>();
+    }
 
     void Update()
     {
         MovePlayer();
+        UpdateAnimation();
     }
 
     void MovePlayer()
@@ -18,5 +26,12 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 dir = new Vector3(moveX, 0, moveZ);
         transform.position += dir * moveSpeed * Time.deltaTime;
+    }
+
+    void UpdateAnimation()
+    {
+        bool isWalking = Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0;
+        animator.SetBool("IsWalking", isWalking);
+        
     }
 }
